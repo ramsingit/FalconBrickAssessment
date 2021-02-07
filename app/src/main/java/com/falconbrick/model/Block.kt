@@ -1,8 +1,8 @@
-package com.example.falconbrick.model
+package com.falconbrick.model
 
 import com.google.gson.annotations.SerializedName
 
 data class Block(
     @SerializedName("block_name") val blockName: String,
-    val units: List<Unit>) {
-}
+    val units: List<Unit>
+)

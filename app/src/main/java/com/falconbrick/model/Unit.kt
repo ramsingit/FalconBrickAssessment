@@ -1,4 +1,4 @@
-package com.example.falconbrick.model
+package com.falconbrick.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -12,5 +12,4 @@ class Unit(
     @SerializedName("property_id") val propertyId: String,
     val title: String,
     @SerializedName("unit_type") val unitType: String,
-) {
-}
+)

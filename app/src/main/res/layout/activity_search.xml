@@ -2,10 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Declared variable for dataBinding -->
     <data>
         <variable
             name="searchAdapter"
-            type="com.example.falconbrick.adapter.SearchRecyclerAdapter" />
+            type="com.falconbrick.adapter.SearchRecyclerAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -43,15 +44,14 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/light_white"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:setAdapter="@{searchAdapter}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
-
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

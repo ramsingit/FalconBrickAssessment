@@ -3,4 +3,5 @@
     <string name="appbar_title">Search</string>
     <string name="search_hint">Search terms here</string>
     <string name="empty_text">Type to start searching for Unit, Activity, Step Name</string>
+    <string name="no_match">No matches for this term</string>
 </resources>
