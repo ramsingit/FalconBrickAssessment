@@ -1,44 +1,51 @@
 package com.example.falconbrick.view
 
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.falconbrick.R
 import com.example.falconbrick.adapter.SearchRecyclerAdapter
 import com.example.falconbrick.databinding.ActivitySearchBinding
-import com.example.falconbrick.model.Block
-import com.example.falconbrick.model.UnitActivity
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.falconbrick.viewmodel.SearchViewModel
 
 class SearchActivity : AppCompatActivity() {
+    private lateinit var searchBinding: ActivitySearchBinding
+    private lateinit var searchAdapter: SearchRecyclerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_search)
 
-        val searchBinding: ActivitySearchBinding =
+        searchBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_search)
 
-        val activities = loadDataFromFile()
-        searchBinding.searchAdapter = SearchRecyclerAdapter(activities)
+        searchAdapter = SearchRecyclerAdapter()
+
+        initSearch()
+        setViewModel()
     }
 
-    /** Function to parse data JSON file*/
-    private fun loadDataFromFile(): List<UnitActivity> {
-        val jsonData = resources.openRawResource(R.raw.data).bufferedReader().use { it.readText() }
-        val blockType = object : TypeToken<List<Block>>() {}.type
-        return flattenList(Gson().fromJson(jsonData, blockType))
-    }
+    private fun initSearch() {
 
-    private fun flattenList(blockList: List<Block>): List<UnitActivity> {
-        val activities : MutableList<UnitActivity> = ArrayList()
-        for (block in blockList){
-            for (unit in block.units){
-                for(activity in unit.activities){
-                    activities.add(UnitActivity(unit, activity))
-                }
+        searchBinding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
-        }
-        return activities
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchAdapter.filter.filter(newText)
+                return false
+            }
+        })
+    }
+
+    private fun setViewModel(){
+        val jsonData = resources.openRawResource(R.raw.data).bufferedReader().use { it.readText() }
+        searchBinding.searchAdapter = searchAdapter
+        val viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        viewModel.getActivitiesList(jsonData).observe(this, { activityList ->
+            searchAdapter.setList(activityList)
+        })
     }
 }

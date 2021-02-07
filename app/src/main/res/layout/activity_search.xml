@@ -31,10 +31,12 @@
                 </androidx.appcompat.widget.Toolbar>
 
                 <SearchView
+                    android:id="@+id/search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:iconifiedByDefault="false"
                     android:queryHint="@string/search_hint" />
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
